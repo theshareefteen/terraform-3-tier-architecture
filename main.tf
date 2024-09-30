@@ -364,9 +364,8 @@ resource "aws_s3_bucket" "my_bucket" {
   bucket = "batch4pmdevopswithaws202477wqrwqfref"  
 
   acl    = "private"  
-  versioning {
-    enabled = true 
-  }
+  versioning_configuration {
+    status = "Enabled"
 }
 
 resource "aws_iam_user" "one" {
