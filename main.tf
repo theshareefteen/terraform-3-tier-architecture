@@ -366,6 +366,7 @@ resource "aws_s3_bucket" "my_bucket" {
   acl    = "private"  
   versioning_configuration {
     status = "Enabled"
+  }
 }
 
 resource "aws_iam_user" "one" {
