@@ -360,10 +360,17 @@ output "lb_dns_name" {
 }
 
 
-resource "aws_s3_bucket" "my_bucket" {
-  bucket = "batch4pmdevopswithaws202477wqrwqfref"  
+resource "aws_s3_bucket" "example" {
+  bucket = "pipleinbucket0088bdhuwtrrr"
+}
 
-  acl    = "private"  
+resource "aws_s3_bucket_acl" "example" {
+  bucket = aws_s3_bucket.example.id
+  acl    = "private"
+}
+
+resource "aws_s3_bucket_versioning" "versioning_example" {
+  bucket = aws_s3_bucket.example.id
   versioning_configuration {
     status = "Enabled"
   }
