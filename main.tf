@@ -193,7 +193,6 @@ resource "aws_db_instance" "mysql" {
   engine                  = "mysql"
   instance_class          = "db.t3.micro"
   allocated_storage       = 20
-  name                    = "mydatabase"
   username                = "admin"
   password                = "Raham#445545"
   skip_final_snapshot     = true
