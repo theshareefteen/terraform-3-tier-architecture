@@ -188,7 +188,7 @@ resource "aws_instance" "appserver2" {
   }
 }
 
-resource "aws_db_instance" "mysql" {
+/*resource "aws_db_instance" "mysql" {
   identifier              = "my-mysql-db"
   engine                  = "mysql"
   instance_class          = "db.t3.micro"
@@ -204,7 +204,7 @@ resource "aws_db_instance" "mysql" {
 
   vpc_security_group_ids = [aws_security_group.database-sg.id]
   db_subnet_group_name   = "My DB subnet group"
-}
+}*/
 
 
 resource "aws_db_subnet_group" "default" {
