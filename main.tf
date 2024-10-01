@@ -134,7 +134,7 @@ resource "aws_route_table_association" "b" {
 }
 
 #Create EC2 Instance
-resource "aws_instance" "webserver2" {
+resource "aws_instance" "webserver1" {
   ami                    = "ami-0d5eff06f840b45e9"
   instance_type          = "t2.micro"
   availability_zone      = "us-east-1a"
