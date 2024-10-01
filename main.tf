@@ -188,10 +188,6 @@ resource "aws_instance" "appserver2" {
   }
 }
 
-provider "aws" {
-  region = "us-east-1"
-}
-
 resource "aws_db_instance" "mysql" {
   identifier              = "my-mysql-db"
   engine                  = "mysql"
