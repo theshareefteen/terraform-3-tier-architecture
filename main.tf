@@ -188,19 +188,29 @@ resource "aws_instance" "appserver2" {
   }
 }
 
-resource "aws_db_instance" "default" {
-  allocated_storage      = 10
-  db_subnet_group_name   = aws_db_subnet_group.default.id
-  engine                 = "mysql"
-  engine_version         = "5.7.mysql_aurora.2.03.2"
-  instance_class         = "db.t2.micro"
-  multi_az               = false
-  db_name                = "mydb"
-  username               = "raham"
-  password               = "Rahamshaik#444555"
-  skip_final_snapshot    = true
-  vpc_security_group_ids = [aws_security_group.database-sg.id]
+provider "aws" {
+  region = "us-east-1"
 }
+
+resource "aws_db_instance" "mysql" {
+  identifier              = "my-mysql-db"
+  engine                  = "mysql"
+  instance_class          = "db.t3.micro"
+  allocated_storage       = 20
+  name                    = "mydatabase"
+  username                = "admin"
+  password                = "Raham#445545"
+  skip_final_snapshot     = true
+  publicly_accessible     = false
+  availability_zone       = "us-east-1a"
+  storage_type            = "gp2"
+  backup_retention_period = 7
+  storage_encrypted       = true
+
+  vpc_security_group_ids = [aws_security_group.database-sg.id]
+  db_subnet_group_name   = "My DB subnet group"
+}
+
 
 resource "aws_db_subnet_group" "default" {
   name       = "main"
