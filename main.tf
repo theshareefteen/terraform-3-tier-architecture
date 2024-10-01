@@ -134,7 +134,7 @@ resource "aws_route_table_association" "b" {
 }
 
 #Create EC2 Instance
-resource "aws_instance" "wnewkperver1" {
+resource "aws_instance" "webserver2" {
   ami                    = "ami-0d5eff06f840b45e9"
   instance_type          = "t2.micro"
   availability_zone      = "us-east-1a"
@@ -148,7 +148,7 @@ resource "aws_instance" "wnewkperver1" {
   }
 }
 
-resource "aws_instance" "wnewkperver2" {
+resource "aws_instance" "webserver2" {
   ami                    = "ami-0d5eff06f840b45e9"
   instance_type          = "t2.micro"
   availability_zone      = "us-east-1b"
@@ -192,7 +192,7 @@ resource "aws_db_instance" "default" {
   allocated_storage      = 10
   db_subnet_group_name   = aws_db_subnet_group.default.id
   engine                 = "mysql"
-  engine_version         = "5.7"
+  engine_version         = "5.7.mysql_aurora.2.03.2"
   instance_class         = "db.t2.micro"
   multi_az               = false
   db_name                = "mydb"
@@ -213,7 +213,7 @@ resource "aws_db_subnet_group" "default" {
 
 
 # Create Web Security Group
-resource "aws_security_group" "wnewkperver-sg" {
+resource "aws_security_group" "webserver-sg" {
   name        = "wnewkperver-sg"
   description = "Allow HTTP inbound traffic"
   vpc_id      = aws_vpc.my-vpc.id
@@ -326,7 +326,7 @@ resource "aws_lb_target_group_attachment" "external-elb1" {
   port             = 80
 
   depends_on = [
-    aws_instance.wnewkperver1,
+    aws_instance.webserver1,
   ]
 }
 
@@ -336,7 +336,7 @@ resource "aws_lb_target_group_attachment" "external-elb2" {
   port             = 80
 
   depends_on = [
-    aws_instance.wnewkperver2,
+    aws_instance.webserver2,
   ]
 }
 
@@ -361,7 +361,7 @@ output "lb_dns_name" {
 
 
 resource "aws_s3_bucket" "example" {
-  bucket = "pipleinbucket0088bdhuwtrrr"
+  bucket = "pipleinbucket0088bdhuwtrrrrf3t56"
 }
 
 
