@@ -418,8 +418,7 @@ resource "aws_iam_group_membership" "team" {
   name = "DevOps Team"
 
   users = [
-    aws_iam_user.one[0],
-    aws_iam_user.one[1]
+    aws_iam_user.one[0]
   ]
 
   group = aws_iam_group.two.devopswithawsbyraham
