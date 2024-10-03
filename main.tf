@@ -46,7 +46,7 @@ resource "aws_subnet" "web-subnet-2" {
   cidr_block              = "10.0.2.0/24"
   availability_zone       = "us-east-1b"
   map_public_ip_on_launch = true
- tags = {
+  tags = {
     Name = "swiggy-Web-subnet-1b"
   }
 }
@@ -145,7 +145,7 @@ resource "aws_instance" "webserver1" {
   key_name               = "dockerr"
   vpc_security_group_ids = [aws_security_group.webserver-sg.id]
   subnet_id              = aws_subnet.web-subnet-1.id
-  user_data              = "${file("apache.sh")}"
+  user_data              = file("apache.sh")
 
   tags = {
     Name = "SWIGGY-Web-Server-1"
@@ -160,7 +160,7 @@ resource "aws_instance" "webserver2" {
   key_name               = "dockerr"
   vpc_security_group_ids = [aws_security_group.webserver-sg.id]
   subnet_id              = aws_subnet.web-subnet-2.id
-  user_data              = "${file("apache.sh")}"
+  user_data              = file("apache.sh")
 
   tags = {
     Name = "SWIGGY-Web-Server-2"
@@ -195,17 +195,17 @@ resource "aws_instance" "appserver2" {
 }
 
 resource "aws_db_instance" "default" {
-  allocated_storage    = 10
-  db_name              = "mydb"
-  engine               = "mysql"
-  engine_version       = "8.0"
-  instance_class       = "db.t3.micro"
-  username             = "admin"
-  password             = "Raham#444555"
-  parameter_group_name = "default.mysql8.0"
-  skip_final_snapshot  = true
+  allocated_storage      = 10
+  db_name                = "mydb"
+  engine                 = "mysql"
+  engine_version         = "8.0"
+  instance_class         = "db.t3.micro"
+  username               = "admin"
+  password               = "Raham#444555"
+  parameter_group_name   = "default.mysql8.0"
+  skip_final_snapshot    = true
   vpc_security_group_ids = [aws_security_group.database-sg.id]
-  db_subnet_group_name  = aws_db_subnet_group.default.id
+  db_subnet_group_name   = aws_db_subnet_group.default.id
 }
 
 resource "aws_db_subnet_group" "default" {
@@ -216,26 +216,6 @@ resource "aws_db_subnet_group" "default" {
     Name = "My DB subnet group"
   }
 }
-
-
-/*resource "aws_db_instance" "mysql" {
-  identifier              = "my-mysql-db"
-  engine                  = "mysql"
-  instance_class          = "db.t3.micro"
-  allocated_storage       = 20
-  username                = "admin"
-  password                = "Raham#445545"
-  skip_final_snapshot     = true
-  publicly_accessible     = false
-  availability_zone       = "us-east-1a"
-  storage_type            = "gp2"
-  backup_retention_period = 7
-  storage_encrypted       = true
-
-  vpc_security_group_ids = [aws_security_group.database-sg.id]
-  db_subnet_group_name   = "My DB subnet group"
-}*/
-
 
 # Create Web Security Group
 resource "aws_security_group" "webserver-sg" {
@@ -265,7 +245,7 @@ resource "aws_security_group" "webserver-sg" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
- tags = {
+  tags = {
     Name = "Web-SG"
   }
 }
@@ -277,18 +257,18 @@ resource "aws_security_group" "appserver-sg" {
   vpc_id      = aws_vpc.my-vpc.id
 
   ingress {
-    description     = "Allow traffic from web layer"
-    from_port       = 8080
-    to_port         = 8080
-    protocol        = "tcp"
+    description = "Allow traffic from web layer"
+    from_port   = 8080
+    to_port     = 8080
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
- ingress {
-    description     = "Allow traffic from web layer"
-    from_port       = 22
-    to_port         = 22
-    protocol        = "tcp"
+  ingress {
+    description = "Allow traffic from web layer"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -311,10 +291,10 @@ resource "aws_security_group" "database-sg" {
   vpc_id      = aws_vpc.my-vpc.id
 
   ingress {
-    description     = "Allow traffic from application layer"
-    from_port       = 3306
-    to_port         = 3306
-    protocol        = "tcp"
+    description = "Allow traffic from application layer"
+    from_port   = 3306
+    to_port     = 3306
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
