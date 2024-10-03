@@ -205,7 +205,7 @@ resource "aws_db_instance" "default" {
   parameter_group_name = "default.mysql8.0"
   skip_final_snapshot  = true
   vpc_security_group_ids = [aws_security_group.database-sg.id]
-  subnet_id              = aws_db_subnet_group.default.id
+  db_subnet_group_name  = aws_db_subnet_group.default.id
 }
 
 resource "aws_db_subnet_group" "default" {
@@ -399,27 +399,25 @@ resource "aws_s3_bucket_versioning" "versioning_example" {
   }
 }
 
-resource "aws_iam_user" "one" {
-for_each = var.iam_users
-name = each.value
-}
-
-variable "iam_users" {
-description = ""
-type = set(string)
-default = ["user1", "user2", "user3", "user4"]
-}
-
-resource "aws_iam_group" "two" {
-name = "devopswithawsbyraham"
-}
-
 resource "aws_iam_group_membership" "team" {
-  name = "DevOps Team"
+  name = "tf-testing-group-membership"
 
   users = [
-    aws_iam_user.one[0]
+    aws_iam_user.user_one.name,
+    aws_iam_user.user_two.name,
   ]
 
-  group = aws_iam_group.two.devopswithawsbyraham
+  group = aws_iam_group.group.name
+}
+
+resource "aws_iam_group" "group" {
+  name = "test-group"
+}
+
+resource "aws_iam_user" "user_one" {
+  name = "test-user"
+}
+
+resource "aws_iam_user" "user_two" {
+  name = "test-user-two"
 }
